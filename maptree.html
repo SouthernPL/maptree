@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>treeMap</title>
+	<link rel="stylesheet" href="./css/main.css">
+	<script src="./libs/jquery.min.js"></script>
+</head>
+<body>
+	<div class="levelbox">
+		<div class="titlecontainer"><span class="total">全 部</span></div>
+		
+	</div>
+	<script src="./libs/maptree.js"></script>
+	<script>
+	var levelTree = [{
+						name:'大大',
+						code:'levela1',
+						son:[{
+							name:'省长a',
+							code:'levelb1',
+							son:[{
+								name:'省a市长a',
+								code:'levelc1',
+								son:[{
+									name:'省a市a县长a',
+									code:'leveld1',
+									son:[{
+										name:'省a市a县a镇长a',
+										code:'levele1',
+										son:[]
+									}]
+								},{
+									name:'省a市a县长b',
+									code:'leveld2',
+									son:[{
+										name:'省a市a县b镇长b',
+										code:'levele2',
+										son:[]
+									}]
+								}]
+							},{
+								name:'省a市长b',
+								code:'levelc2',
+								son:[{
+									name:'省a市b县长a',
+									code:'leveld3',
+									son:[]
+								},{
+									name:'省a市b县长b',
+									code:'leveld4',
+									son:[{
+										name:'省a市b县b镇长a',
+										code:'levele3',
+										son:[]
+									},{
+										name:'省a市b县b镇长b',
+										code:'levele4',
+										son:[]
+									},{
+										name:'省a市b县b镇长c',
+										code:'levele5',
+										son:[]
+									},{
+										name:'省a市b县b镇长d',
+										code:'levele6',
+										son:[]
+									}]
+								}]
+							},{
+								name:'省a市长c',
+								code:'levelc3',
+								son:[]
+							}]
+						},{
+							name:'省长b',
+							code:'levelb2',
+							son:[{
+								name:'省b市长a',
+								code:'levelc4',
+								son:[{
+									name:'省b市a县长a',
+									code:'leveld5',
+									son:[]
+								}]
+							},{
+								name:'省b市长b',
+								code:'levelc5',
+								son:[{
+									name:'省b市b县长a',
+									code:'leveld6',
+									son:[{
+										name:'省b市b县a镇长a',
+										code:'levele7',
+										son:[]
+									},{
+										name:'省b市b县a镇长b',
+										code:'levele8',
+										son:[]
+									}]
+								}]
+							}]
+						},{
+							name:'省长c',
+							code:'levelb3',
+							son:[{
+								name:'省c市长a',
+								code:'levelc6',
+								son:[{
+									name:'省c市a县长a',
+									code:'leveld7',
+									son:[{
+										name:'省c市a县a镇长a',
+										code:'levele9',
+										son:[]
+									}]
+								},{
+									name:'省c市a县长b',
+									code:'leveld8',
+									son:[{
+										name:'省c市a县b镇长a',
+										code:'levele10',
+										son:[]
+									}]
+								},{
+									name:'省c市a县长c',
+									code:'leveld9',
+									son:[{
+										name:'省c市a县c镇长a',
+										code:'levele11',
+										son:[]
+									}]
+								},{
+									name:'省c市a县长d',
+									code:'leveld10',
+									son:[{
+										name:'省c市a县d镇长a',
+										code:'levele12',
+										son:[]
+									},{
+										name:'省c市a县d镇长b',
+										code:'levele13',
+										son:[]
+									},{
+										name:'省c市a县d镇长c',
+										code:'levele14',
+										son:[]
+									},{
+										name:'省c市a县d镇长d',
+										code:'levele15',
+										son:[]
+									},{
+										name:'省c市a县d镇长e',
+										code:'levele16',
+										son:[]
+									}]
+								}]
+							}]
+						},{
+							name:'省长d',
+							code:'levelb4',
+							son:[{
+								name:'省d市长a',
+								code:'levelc7',
+								son:[{
+									name:'省d市a县长a',
+									code:'leveld11',
+									son:[{
+										name:'省d市a县a镇长a',
+										code:'levele17',
+										son:[]
+									}]
+								}]
+							},{
+								name:'省d市长b',
+								code:'levelc8',
+								son:[]
+							}]
+						},{
+							name:'省长e',
+							code:'levelb5',
+							son:[{
+								name:'省e市长a',
+								code:'levelc9',
+								son:[{
+									name:'省e市a县长a',
+									code:'leveld12',
+									son:[{
+										name:'省e市a县a镇长a',
+										code:'levele18',
+										son:[]
+									}]
+								},{
+									name:'省e市a县长b',
+									code:'leveld13',
+									son:[{
+										name:'省e市a县b镇长a',
+										code:'levele19',
+										son:[]
+									}]
+								},{
+									name:'省e市a县长c',
+									code:'leveld14',
+									son:[{
+										name:'省e市a县c镇长a',
+										code:'levele20',
+										son:[]
+									},{
+										name:'省e市a县c镇长b',
+										code:'levele21',
+										son:[]
+									},{
+										name:'省e市a县c镇长c',
+										code:'levele22',
+										son:[]
+									},{
+										name:'省e市a县c镇长d',
+										code:'levele23',
+										son:[]
+									}]
+								}]
+							}]
+						}]
+					}]
+
+	console.log('展示原始树状数据结构',levelTree);
+	function initTreeDom(data){
+		var container=$('.levelbox');
+		$('.container').remove();
+		for (var i in data){
+			if(data[i].length>0){
+				var level = i;
+				var titleHtml='<div class="containerleft"><span>等级'+level+':</span></div>';
+				var contentHtml='';
+				data[i].map(function(val,key){
+					contentHtml +='<span id="'+val.myId+'">'+val.name+'</span>';
+
+				})
+				var totalHtml='<div class="container">'+
+								titleHtml+
+								'<div class="containerright">'+
+								contentHtml+
+								'</div>'+
+								'</div>';
+				container.append($(totalHtml));
+				$('.containerright span').click(function(e){
+					var myId=e.target.id;
+					console.log('idid',myId);
+					searchTree(myId);
+				})
+			}
+			
+		}
+	}
+	
+	function init(data){
+		//得到加工后的完整的level对象
+		var initLevelTree=factoryTree(data);
+		console.log('检查加工后的完整的leveltree对象',initLevelTree);
+		initTreeDom(initLevelTree);
+	}
+
+	init(levelTree);
+
+	function searchTree(id){
+		//根据唯一的身份ID去向上向下查找父子关系
+		var searchLevelTree=factoryTree(levelTree,id);
+		console.log('检查根据ID查找得到的leveltree对象',searchLevelTree);
+		initTreeDom(searchLevelTree);
+	}
+
+	$('.total').click(function(){
+		init(levelTree);
+	})
+
+	</script>
+</body>
+</html>
