@@ -222,6 +222,7 @@
 							}]
 						}]
 					}]
+	
 
 	console.log('展示原始树状数据结构',levelTree);
 	function initTreeDom(data){
@@ -243,14 +244,16 @@
 								'</div>'+
 								'</div>';
 				container.append($(totalHtml));
-				$('.containerright span').click(function(e){
-					var myId=e.target.id;
-					console.log('idid',myId);
-					searchTree(myId);
-				})
+
 			}
 			
 		}
+		$('.containerright span').click(function(e){
+			
+			var myId=e.target.id;
+			console.log('idid',myId);
+			searchTree(myId);
+		})
 	}
 	
 	function init(data){
@@ -270,6 +273,7 @@
 	}
 
 	$('.total').click(function(){
+		
 		init(levelTree);
 	})
 
